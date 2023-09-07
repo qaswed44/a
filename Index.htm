@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Generar PDF</title>
+</head>
+<body background="Generar%20PDF_files/logo2.jpg">
+
+  <button id="generate">Generar PDF</button>
+
+  <script src="Generar%20PDF_files/jspdf.min.js"></script>
+  <script>
+
+    // Obtenemos los parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const text1 = urlParams.get('t1'); 
+    const text2 = urlParams.get('t2');
+    const text3 = urlParams.get('t3');
+    const text4 = urlParams.get('t4');
+/* Estilos para smartphones */
+document.write(`<meta name="viewport" content="width=480">`);
+document.write('<body background="logo2.jpg">');
+    // Mostramos los textos por pantalla
+ document.write(`<p>presion`);
+    document.write(` ${text1}</p>`);
+    document.write(`${text2}</p>`);
+    document.write(`${text3}</p>`);
+    document.write(`${text4}`);
+
+    const button = document.getElementById('generate');
+    button.addEventListener('click', () => {
+            // Definir un tamaño de página personalizado para visualización en smartphones
+      const doc = new jsPDF({
+        orientation: 'portrait',  // Orientación vertical
+        unit: 'mm',               // Unidades en milímetros
+        format: [400, 640],       // Tamaño personalizado (ancho x alto)
+ });
+
+      doc.text("DATA REPORT",60,10);
+      doc.text("Tamperatura 1", 10, 30);
+      doc.text(text1, 60, 30);
+      doc.text(text2, 60, 40);
+      doc.text(text3, 60, 50);
+      doc.text(text4, 60, 60);
+
+    const img = "data:image/jpeg;base64,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"
+
+    doc.addImage(img, 'JPEG', 100, 10, 30, 30);
+
+
+      
+      doc.save('Report.pdf');
+    })
+
+  </script><meta name="viewport" content="width=480"><p></p>
+
+
+
+</body></html>
